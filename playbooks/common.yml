@@ -13,8 +13,9 @@
 - name: update LB server
   hosts: lb
   remote_user: ubuntu
-  become: yes
+  become: true
   become_user: root
+  gather_facts: false
   tasks:
     - name: update apt repo
       apt:
