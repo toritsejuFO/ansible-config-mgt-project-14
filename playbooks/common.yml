@@ -23,5 +23,5 @@
 
     - name: ensure wireshark is at the latest version
       apt:
-        name: wireshark
+        name: wireshark-qt
         state: latest
