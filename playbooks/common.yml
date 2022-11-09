@@ -15,11 +15,10 @@
   remote_user: ubuntu
   become: true
   become_user: root
-  gather_facts: false
   tasks:
     - name: update apt repo
       apt:
-        update_cache: no
+        update_cache: yes
 
     - name: ensure wireshark is at the latest version
       apt:
