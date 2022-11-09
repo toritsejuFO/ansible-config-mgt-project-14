@@ -9,4 +9,4 @@
 172.31.24.205 ansible_ssh_user='ec2-user'
 
 [lb]
-172.31.24.252 ansible_ssh_user='ubuntu' ansible_python_interpreter='/usr/bin/python3' ansible_host_key_checking=false
+172.31.88.15 ansible_ssh_user='ubuntu'
