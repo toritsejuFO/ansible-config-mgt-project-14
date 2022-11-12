@@ -35,11 +35,11 @@
   tasks:
     - name: Create directory
       file:
-        src: /home/test
+        path: /home/test
         state: directory
 
     - name: Create file
       file:
-        src: /home/test/testfile.txt
+        path: /home/test/testfile.txt
         state: touch
         mode: '0777'
