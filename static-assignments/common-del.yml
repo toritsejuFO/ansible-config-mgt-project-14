@@ -4,7 +4,7 @@
   remote_user: ec2-user
   become: true
   become_user: root
-  gather_facts: false
+  gather_facts: False
   tasks:
     - name: delete wireshark
       yum:
@@ -16,21 +16,21 @@
   remote_user: ubuntu
   become: true
   become_user: root
-  gather_facts: false
+  gather_facts: False
   tasks:
     - name: delete wireshark
       apt:
-        name: wireshark-qt
+        name: wireshark
         state: absent
-        autoremove: yes
-        purge: yes
-        autoclean: yes
+        # autoremove: yes
+        # purge: yes
+        # autoclean: yes
 
 - name: Delete directory recursively on nfs, web, db and lb servers
   hosts: nfs, webservers, db, lb
   become: true
   become_user: root
-  gather_facts: false
+  gather_facts: False
   tasks:
     - name: Create directory
       file:
