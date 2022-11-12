@@ -4,7 +4,7 @@
   remote_user: ec2-user
   become: true
   become_user: root
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: delete wireshark
       yum:
@@ -16,11 +16,11 @@
   remote_user: ubuntu
   become: true
   become_user: root
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: delete wireshark
       apt:
-        name: wireshark
+        name: wireshark-qt
         state: absent
         autoremove: yes
         purge: yes
@@ -30,7 +30,7 @@
   hosts: nfs, webservers, db, lb
   become: true
   become_user: root
-  gather_facts: False
+  gather_facts: false
   tasks:
     - name: Create directory
       file:
