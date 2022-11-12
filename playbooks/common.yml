@@ -26,3 +26,20 @@
       apt:
         name: wireshark
         state: latest
+
+- name: Create directory and file on nfs, web, db and lb servers
+  hosts: nfs, webservers, db, lb
+  become: true
+  become_user: root
+  gather_facts: False
+  tasks:
+    - name: Create directory
+      file:
+        src: /home/test
+        state: directory
+
+    - name: Create file
+      file:
+        src: /home/test/testfile.txt
+        state: touch
+        mode: '0777'
