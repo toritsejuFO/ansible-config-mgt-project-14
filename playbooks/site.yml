@@ -1,0 +1,5 @@
+---
+- name: Entry point for all playbooks
+  hosts: all
+
+- import_playbook: ../static-assignments/common-del.yml

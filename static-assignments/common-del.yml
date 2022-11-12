@@ -1,0 +1,38 @@
+---
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  gather_facts: False
+  tasks:
+    - name: delete wireshark
+      yum:
+        name: wireshark
+        state: removed
+
+- name: update LB server
+  hosts: lb
+  remote_user: ubuntu
+  become: true
+  become_user: root
+  gather_facts: False
+  tasks:
+    - name: delete wireshark
+      apt:
+        name: wireshark
+        state: absent
+        autoremove: yes
+        purge: yes
+        autoclean: yes
+
+- name: Delete directory recursively on nfs, web, db and lb servers
+  hosts: nfs, webservers, db, lb
+  become: true
+  become_user: root
+  gather_facts: False
+  tasks:
+    - name: Create directory
+      file:
+        path: /home/test
+        state: absent
