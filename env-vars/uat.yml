@@ -1,6 +1,6 @@
 # Only one should be true per time
-enable_nginx_lb: true
-enable_apache_lb: false
+enable_nginx_lb: false
+enable_apache_lb: true
 
 # Determines whic LB to use, one of the above must be true
 load_balancer_is_required: true
