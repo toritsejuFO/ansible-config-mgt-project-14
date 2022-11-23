@@ -20,25 +20,25 @@ pipeline {
     }
 
     stage ('Checkout SCM') {
-      step {
+      steps {
         git branch: '$BRANCH_NAME', url: 'https://github.com/toritsejuFO/ansible-config-mgt-project-14.git'
       }
     }
 
     stage ('Set roles in ansible dynamically') {
-      step {
+      steps {
         sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${ANSIBLE_CONFIG}'
       }
     }
 
     stage ('Run ansible playbook') {
-      step {
+      steps {
         ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${env}.txt', playbook: 'playbook/site.yml'
       }
     }
 
     stage ('Clean up') {
-      step {
+      steps {
         cleanWs()
       }
     }
