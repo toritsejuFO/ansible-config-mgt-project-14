@@ -1,6 +1,14 @@
 pipeline {
   agent any
 
+  environment {
+    ANSIBLE_CONFIG = '$WORKSPACE/deploy/ansible.cfg'
+  }
+
+  parameters {
+    string name: 'env', defaultValue: 'dev', description: 'This is the inventory file for the environment to deploy configuration'
+  }
+
   stages {
     stage ('Initial cleanup') {
       steps {
@@ -11,41 +19,27 @@ pipeline {
       }
     }
 
-    stage('Build') {
-      steps {
-        script {
-          sh 'echo "Building stage"'
-        }
+    stage ('Checkout SCM') {
+      step {
+        git branch: '$BRANCH_NAME', url: 'https://github.com/toritsejuFO/ansible-config-mgt-project-14.git'
       }
     }
 
-    stage('Test') {
-      steps {
-        script {
-          sh 'echo "Testing stage"'
-        }
+    stage ('Set roles in ansible dynamically') {
+      step {
+        sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${ANSIBLE_CONFIG}'
       }
     }
 
-    stage('Package') {
-      steps {
-        script {
-          sh 'echo "Packageing stage"'
-        }
+    stage ('Run ansible playbook') {
+      step {
+        ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${env}.txt', playbook: 'playbook/site.yml'
       }
     }
 
-    stage('Deploy') {
-      steps {
-        script {
-          sh 'echo "Deploying stage"'
-        }
-      }
-    }
-
-    stage('Clean up') {
-      steps {
-        cleanWs notFailBuild: true
+    stage ('Clean up') {
+      step {
+        cleanWs()
       }
     }
   }

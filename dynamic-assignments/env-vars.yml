@@ -7,8 +7,8 @@
       include_vars: "{{ item }}"
       with_first_found:
         - files:
-            - uat.yml
             - dev.yml
+            - uat.yml
             - staging.yml
             - prod.yml
           paths:
