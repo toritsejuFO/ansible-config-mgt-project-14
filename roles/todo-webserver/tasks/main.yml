@@ -1,5 +1,9 @@
 ---
 # tasks file for todo-webserver
+- name: update cache
+  yum:
+    update_cache: yes
+
 - name: install remi and rhel repo
   yum:
     name:
