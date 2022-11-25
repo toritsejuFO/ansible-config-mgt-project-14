@@ -1,0 +1,74 @@
+---
+# tasks file for todo-webserver
+- name: install remi and rhel repo
+  yum:
+    name:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+      - dnf-utils
+      - http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    disable_gpg_check: yes
+
+- name: install httpd on the webserver
+  yum:
+    name: httpd
+    state: present
+
+- name: ensure httpd is started and enabled
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: install PHP
+  yum:
+    name:
+      - php
+      - php-mysqlnd
+      - php-gd
+      - php-curl
+      - unzip
+      - php-common
+      - php-mbstring
+      - php-opcache
+      - php-intl
+      - php-xml
+      - php-fpm
+      - php-json
+    enablerepo: php:remi-7.4
+    state: present
+
+- name: ensure php-fpm is started and enabled
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes
+
+- name: Download the artifact
+  get_url:
+    url: http://3.218.249.177:8082/artifactory/pbl/php-todo
+    dest: /home/ec2-user/
+    url_username: admin
+    url_password: AP6w5WaYoCZBE5cPFSssKGSEwuV
+
+- name: unzip the artifacts
+  unarchive:
+    src: /home/ec2-user/php-todo
+    dest: /home/ec2-user/
+    remote_src: yes
+
+- name: deploy the code
+  copy:
+    src: /home/ec2-user/var/lib/jenkins/workspace/php-todo_main/
+    dest: /var/www/html/
+    force: yes
+    remote_src: yes
+
+- name: remove nginx default page
+  file:
+    path: /etc/httpd/conf.d/welcome.conf
+    state: absent
+
+- name: restart httpd
+  service:
+    name: httpd
+    state: restarted
