@@ -1,11 +1,15 @@
 ---
-- hosts: db
-- name: mysql assignment
-  import_playbook: ../static-assignments/db.yml
+# - hosts: db
+# - name: mysql assignment
+#   import_playbook: ../static-assignments/db.yml
 
-- hosts: nginx
-- name: nginx assignment
-  import_playbook: ../static-assignments/load-balancers.yml
+# - hosts: nginx
+# - name: nginx assignment
+#   import_playbook: ../static-assignments/load-balancers.yml
+
+- hosts: artifactory
+- name: artifactory assignment
+  import_playbook: ../static-assignments/artifactory.yml
 
 # - hosts: uat-webservers
 # - name: uat webservers
