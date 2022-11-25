@@ -3,3 +3,6 @@
 
 [db]
 172.31.24.205 ansible_ssh_user='ec2-user'
+
+[sonarqube]
+172.31.6.229 ansible_ssh_user='ubuntu'
