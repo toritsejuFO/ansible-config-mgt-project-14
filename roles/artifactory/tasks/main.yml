@@ -33,6 +33,7 @@
     state: present
 
 - name: start and enable artifactory
+  become: true
   service:
     name: artifactory
     state: started
